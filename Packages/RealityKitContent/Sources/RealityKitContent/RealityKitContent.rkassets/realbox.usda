@@ -1,5 +1,8 @@
 #usda 1.0
 (
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.100.6)"
+    }
     defaultPrim = "Root"
     metersPerUnit = 1
     upAxis = "Y"
@@ -7,7 +10,6 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Sphere_Left", "Sphere_Right", "GridMaterial"]
     def "realbox" (
         active = true
         customData = {
