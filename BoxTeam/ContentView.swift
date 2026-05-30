@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import SwiftData
 
 struct ContentView: View {
     
@@ -22,6 +23,9 @@ struct ContentView: View {
     // 앱 전체에서 공유하는 상태값
     // AppModel 안에는 immersiveSpaceID, mainWindowID, 박스 데이터 등이 들어있음
     @Environment(AppModel.self) private var appModel
+    
+    //swift데이타 저장 도구 - BK
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         VStack(spacing: 20) {
