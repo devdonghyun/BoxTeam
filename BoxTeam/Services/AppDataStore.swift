@@ -24,7 +24,7 @@ final class AppDataStore {
         return try modelContext.fetch(descriptor).first
     }
 
-    func createBoxIfNeeded() throws -> BoxState {
+    func createBox() throws -> BoxState {
         if let box = try fetchBox() {
             return box
         }
@@ -35,6 +35,15 @@ final class AppDataStore {
         return box
     }
 
+    func deleteBox() throws {
+        guard let box = try fetchBox() else {
+            return
+        }
+
+        modelContext.delete(box)
+        try modelContext.save()
+    }
+    
     func saveBoxPosition(_ position: SIMD3<Float>) throws {
         guard let box = try fetchBox() else {
             return
