@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+// 메모 데이타값 저장소: 메모 내용, 색상인덱스(int), 공간에 존재 여부, 위치, 앵커여부, -> 위치가 SIMD3<Float> 가 아닐 경우 개별 처리 필요
+
 @Model
 final class MemoItem {
     @Attribute(.unique) var id: UUID

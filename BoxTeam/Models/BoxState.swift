@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+//박스 데이타 값 저장소: 박스의 위치, 앵커가 되었는지 저장 -> 박스의 마지막 위치만 받으면 됨
 @Model
 final class BoxState {
     @Attribute(.unique) var id: String
