@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import SwiftData
 
 @MainActor
@@ -86,11 +87,11 @@ final class AppDataStore {
 
     func createMemo(
         text: String,
-        colorIndex: Int = 0
+        color: Color
     ) throws -> MemoItem {
         let memo = MemoItem(
             text: text,
-            colorIndex: colorIndex
+            color: color
         )
 
         modelContext.insert(memo)
