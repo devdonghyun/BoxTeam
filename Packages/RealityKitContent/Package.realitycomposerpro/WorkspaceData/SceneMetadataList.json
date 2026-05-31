@@ -47,6 +47,107 @@
       }
     ]
   },
+  "9D03241E-80DB-4E21-B388-112503123686" : {
+    "objectMetadataList" : [
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "_materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "Cube_002"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "Spot"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "Area"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "challenge3logo"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "Cube_001"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "Cube"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D03241E-80DB-4E21-B388-112503123686",
+        "Root",
+        "realbox",
+        "Camera"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
   "AF09ED6F-1707-48FD-8720-65B998362C09" : {
     "objectMetadataList" : [
       [
@@ -63,7 +164,8 @@
     "objectMetadataList" : [
       [
         "CB766F92-EE55-4A63-9401-E7B8C009764D",
-        "Root"
+        "Root",
+        "GridMaterial"
       ],
       {
         "isExpanded" : true,
@@ -71,8 +173,7 @@
       },
       [
         "CB766F92-EE55-4A63-9401-E7B8C009764D",
-        "Root",
-        "GridMaterial"
+        "Root"
       ],
       {
         "isExpanded" : true,

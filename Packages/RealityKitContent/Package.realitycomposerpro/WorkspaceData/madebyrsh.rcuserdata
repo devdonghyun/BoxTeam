@@ -1,0 +1,64 @@
+{
+  "advancedEditorSelectedIdentifier" : "ProjectBrowser",
+  "openSceneRelativePaths" : [
+    "Scene.usda",
+    "realbox.usda"
+  ],
+  "recentIdentifiers" : {
+    "9D03241E-80DB-4E21-B388-112503123686" : [
+
+    ]
+  },
+  "sceneCameraHistory" : {
+    "9D03241E-80DB-4E21-B388-112503123686" : [
+      {
+        "date" : 801814972.251904,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.7071069,
+          -0.70710677,
+          0,
+          0,
+          0.70710677,
+          0.7071069,
+          0,
+          0,
+          0.21713166,
+          0.21713175,
+          1
+        ]
+      },
+      {
+        "date" : 801814965.910621,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.7071069,
+          -0.70710677,
+          0,
+          0,
+          0.70710677,
+          0.7071069,
+          0,
+          0,
+          2.5514462,
+          2.551447,
+          1
+        ]
+      }
+    ]
+  },
+  "sceneViewportBackgroundColors" : {
+
+  },
+  "selectedSceneRelativePath" : "realbox.usda"
+}
