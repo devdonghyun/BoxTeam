@@ -111,8 +111,17 @@ struct MemoListView: View {
                 ScrollView{
                     // 메모 표시 구역, 그리드 뷰
                     LazyVGrid(columns: colums, spacing: 24){
-                        ForEach(MemoItems){
-                            NowMemo in MemoIconView(NowMemo: NowMemo)
+                        ForEach(MemoItems) { nowMemo in
+                            MemoIconView(NowMemo: nowMemo)
+                                .onTapGesture {
+                                    guard isSelectionMode else { return }
+
+                                    if selectedMemoIDs.contains(nowMemo.id) {
+                                        selectedMemoIDs.remove(nowMemo.id)
+                                    } else {
+                                        selectedMemoIDs.insert(nowMemo.id)
+                                    }
+                                }
                         }
                     }.padding(.horizontal)
                 }
