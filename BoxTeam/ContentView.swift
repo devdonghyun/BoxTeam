@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import SwiftData
 
 struct ContentView: View {
     
@@ -22,6 +23,9 @@ struct ContentView: View {
     // 앱 전체에서 공유하는 상태값
     // AppModel 안에는 immersiveSpaceID, mainWindowID, 박스 데이터 등이 들어있음
     @Environment(AppModel.self) private var appModel
+    
+    //swift데이타 저장 도구 - BK
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         VStack(spacing: 20) {
@@ -62,11 +66,15 @@ struct ContentView: View {
     // 박스를 만들고 Immersive Space를 여는 함수
     // openImmersiveSpace는 비동기 함수이기 때문에 async가 필요함
     private func createBoxAndOpenImmersiveSpace() async {
+        let dataStore = AppDataStore(modelContext: modelContext)
         
-        // AppModel에 박스 데이터를 생성함
-        // 실제 3D 박스를 만드는 것은 ImmersiveView에서 담당하고,
-        // 여기서는 "박스가 생성되었다"는 데이터 상태만 바꿔주는 역할
-        appModel.createProjectBox()
+        do {
+                try dataStore.createBox()
+                appModel.createProjectBox()
+            } catch {
+                print("박스 저장 실패:", error)
+                return
+            }
         
         // Immersive Space가 이미 열려 있지 않은 경우에만 새로 열기 위해 검사함
         // 이미 열려 있다면 다시 열 필요가 없으므로 MainWindow만 닫고 종료

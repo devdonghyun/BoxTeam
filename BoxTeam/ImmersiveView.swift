@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import SwiftData
 
 struct ImmersiveView: View {
     
@@ -15,6 +16,10 @@ struct ImmersiveView: View {
     // 여기서는 appModel.projectBox가 있는지 확인해서
     // 박스를 실제 공간에 보여줄지 결정함
     @Environment(AppModel.self) private var appModel
+    
+    //데이타 불러오기 - bk
+    @Query private var boxes: [BoxState]
+    
     
     var body: some View {
         
@@ -29,18 +34,16 @@ struct ImmersiveView: View {
                 // RealityKitContent 번들 안에 있는 "realbox" Entity를 불러옴
                 // Reality Composer Pro에서 만든 오브젝트 이름과 같아야 함
                 let boxEntity = try await Entity(
-                    named: "realbox",
+                    named: "box_0530_1953",
                     in: realityKitContentBundle
                 )
                 
                 // 코드에서 이 Entity를 찾거나 구분할 때 사용할 이름
-                boxEntity.name = "realbox"
+                boxEntity.name = "box_0530_1953"
                 
-                // 박스의 위치 설정
-                // x: 좌우, y: 위아래, z: 앞뒤
-                // z가 음수이면 사용자 앞쪽 방향
-                boxEntity.position = [0, 1.2, -1]
-                
+               //데이타와 위치 연결 - bk
+                boxEntity.position = boxes.first?.position ?? SIMD3<Float>(0, 1.2, -1.5)
+
                 // Immersive Space 안에 박스 Entity 추가
                 // 이 순간부터 공간 안에 realbox가 보이게 됨
                 content.add(boxEntity)
