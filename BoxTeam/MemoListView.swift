@@ -10,6 +10,9 @@ import SwiftData
 
 // Memo List Widow를 위한 SwiftUI 기반의 View
 struct MemoListView: View {
+    
+    
+    
     // Grid 구조
     let colums = [
         GridItem(.flexible(), spacing: 0),
@@ -23,6 +26,11 @@ struct MemoListView: View {
     // 모든 메모 정보가 담겨있는 MemoItems를 Query
     @Query var MemoItems: [MemoItem]
     
+    
+    //선택버튼으로 삭제 모드 전환
+    @State private var isSelectionMode = false
+    @State private var selectedMemoIDs: Set<UUID> = []
+    
     // Adding 테스트용 메모
     @State var AddingTestMemo: MemoItem = MemoItem(
         name: "Test",
@@ -34,31 +42,64 @@ struct MemoListView: View {
         VStack{
             // 상단 편집 버튼 목록
             HStack{
-                // 닫기 버튼
-                Button(action: {
-                    print("닫기 액션")
-                }){
-                    Text("닫기")
-                }
-                .buttonStyle(.borderedProminent)
-                .glassBackgroundEffect()
-                
-                Spacer()
-                
-                // 메모 추가 버튼(추가 버튼 클릭시 테스트 메모 하나 추가. 다시 한번 클릭시 추가된 메모가 삭제됨)
-                Button(action: {
-                    if MemoItems.isEmpty{
-                        modelContext.insert(AddingTestMemo)
-                        print("메모가 추가되었습니다. 메로 추가 버튼을 다시 한번 눌러 메모를 삭제할 수 있습니다.")
-                    }else{
-                        modelContext.delete(AddingTestMemo)
-                        print("메모가 삭제되었습니다.")
+                if isSelectionMode {
+                    Button(action: {
+                        isSelectionMode = false
+                        selectedMemoIDs.removeAll()
+                        print("취소 액션")
+                    }) {
+                        Text("취소")
                     }
-                }){
-                    Text("메모 추가")
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        for memo in MemoItems where selectedMemoIDs.contains(memo.id) {
+                            modelContext.delete(memo)
+                        }
+                        selectedMemoIDs.removeAll()
+                        isSelectionMode = false
+                        print("삭제 액션")
+                    }) {
+                        Text("삭제")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .glassBackgroundEffect()
+                } else {
+                    // 닫기 버튼
+                    Button(action: {
+                        print("닫기 액션")
+                    }){
+                        Text("닫기")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .glassBackgroundEffect()
+                    
+                    Spacer()
+                    
+                    //선택 버튼
+                    Button(action: {
+                        isSelectionMode = true
+                        print("선택 액션")
+                    }) {
+                        Text("선택")
+                    }
+                    
+                    // 메모 추가 버튼(추가 버튼 클릭시 테스트 메모 하나 추가. 다시 한번 클릭시 추가된 메모가 삭제됨)
+                    Button(action: {
+                        if MemoItems.isEmpty{
+                            modelContext.insert(AddingTestMemo)
+                            print("메모가 추가되었습니다. 메로 추가 버튼을 다시 한번 눌러 메모를 삭제할 수 있습니다.")
+                        }else{
+                            modelContext.delete(AddingTestMemo)
+                            print("메모가 삭제되었습니다.")
+                        }
+                    }){
+                        Text("메모 추가")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .glassBackgroundEffect()
                 }
-                .buttonStyle(.borderedProminent)
-                .glassBackgroundEffect()
             }.padding()
             Spacer()
             if MemoItems.isEmpty {
