@@ -17,6 +17,11 @@ struct ImmersiveView: View {
     // 박스를 실제 공간에 보여줄지 결정함
     @Environment(AppModel.self) private var appModel
     
+    // 생성된 박스를 나중에 다시 접근하기 위해 저장하는 변수
+    // 예: 드래그할 때 boxEntity의 위치를 바꾸기 위해 필요
+    @State private var boxEntity: Entity?
+    @State private var isMemoListVisible: Bool = false
+  
     //데이타 불러오기 - bk
     @Query private var boxes: [BoxState]
     
@@ -41,6 +46,13 @@ struct ImmersiveView: View {
                 // 코드에서 이 Entity를 찾거나 구분할 때 사용할 이름
                 boxEntity.name = "realbox"
                 
+                // 박스의 위치 설정
+                // x: 좌우, y: 위아래, z: 앞뒤
+                // z가 음수이면 사용자 앞쪽 방향
+               
+                boxEntity.generateCollisionShapes(recursive: true)
+                boxEntity.components.set(InputTargetComponent())
+                
                //데이타와 위치 연결 - bk
                 boxEntity.position = boxes.first?.position ?? SIMD3<Float>(0, 1.2, -1.5)
 
@@ -61,6 +73,18 @@ struct ImmersiveView: View {
                 // MeMoListEntity를 Child로 추가한 뒤 add
                 content.add(boxEntity)
                 
+                if let memoListEntity = attachments.entity(for: "memoList") {
+                    memoListEntity.position = [0, 0.4, 0]
+                    boxEntity.addChild(memoListEntity)
+                }
+                
+                if let boxControlEntity = attachments.entity(for: "boxControl") {
+                    boxControlEntity.position = [0, -0.1, 0.1]
+                    boxEntity.addChild(boxControlEntity)
+                }
+                
+                self.boxEntity = boxEntity
+                
             } catch {
                 // realbox 이름이 틀렸거나,
                 // RealityKitContent에 해당 Entity가 없으면 여기로 들어옴
@@ -73,7 +97,41 @@ struct ImmersiveView: View {
             Attachment(id: "MemoListView") {
                 MemoListView()
             }
+            Attachment(id: "boxControl") {
+                BoxControlView()
+            }
         }
+        .gesture(
+            TapGesture()
+                .targetedToAnyEntity()
+                .onEnded { value in
+                    guard let boxEntity else { return }
+                    
+                    guard let animation = boxEntity.availableAnimations.first else {
+                        return
+                    }
+                    
+                    boxEntity.playAnimation(animation)
+                    isMemoListVisible = true
+                }
+        )
+        .gesture(
+            DragGesture()
+                .targetedToAnyEntity()
+                .onChanged { value in
+                    guard let boxEntity else { return }
+                    
+                    guard let parent = boxEntity.parent else {
+                        return
+                    }
+                    
+                    boxEntity.position = value.convert(
+                        value.location3D,
+                        from: .local,
+                        to: parent
+                    )
+                }
+        )
     }
 }
 
