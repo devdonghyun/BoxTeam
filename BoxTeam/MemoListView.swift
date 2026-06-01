@@ -10,8 +10,7 @@ import SwiftData
 
 // Memo List Widow를 위한 SwiftUI 기반의 View
 struct MemoListView: View {
-    
-    
+    let isVisible: Bool
     
     // Grid 구조
     let colums = [
@@ -131,6 +130,9 @@ struct MemoListView: View {
         .frame(width: 920, height: 537)
         .glassBackgroundEffect()
         .padding()
+        .opacity(isVisible ? 1 : 0)
+        .scaleEffect(isVisible ? 1 : 0.3)
+        .animation(.spring, value: isVisible)
     }
 }
 
