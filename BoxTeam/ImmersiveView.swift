@@ -98,7 +98,7 @@ struct ImmersiveView: View {
         } attachments: {
             // MemoListView를 불러와 MemoList UI Window 표시. id는 MemoListView로 설정해 attachments Entity 생성시 찾을 수 있도록 함.
             Attachment(id: "MemoListView") {
-                MemoListView()
+                MemoListView(isVisible: isMemoListVisible)
             }
             Attachment(id: "boxControl") {
                 BoxControlView()
