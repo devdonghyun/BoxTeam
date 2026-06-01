@@ -65,4 +65,9 @@ final class AppModel {
         // 이 순간부터 projectBox는 nil이 아니게 됨
         projectBox = ProjectBoxData()
     }
+    
+    func deleteProjectBox() {
+        projectBox = nil
+    }
+    
 }

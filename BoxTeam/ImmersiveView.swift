@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import SwiftData
 
 struct ImmersiveView: View {
     
@@ -16,10 +17,14 @@ struct ImmersiveView: View {
     // 박스를 실제 공간에 보여줄지 결정함
     @Environment(AppModel.self) private var appModel
     
+    //데이타 불러오기 - bk
+    @Query private var boxes: [BoxState]
+    
+    
     var body: some View {
         
         // visionOS 공간 안에 RealityKit 3D 콘텐츠를 배치하는 View
-        RealityView { content in
+        RealityView { content, attachments in
             
             // projectBox가 nil이면 아직 박스 데이터가 생성되지 않은 상태
             // 따라서 realbox를 불러오지 않고 종료
@@ -36,19 +41,37 @@ struct ImmersiveView: View {
                 // 코드에서 이 Entity를 찾거나 구분할 때 사용할 이름
                 boxEntity.name = "realbox"
                 
-                // 박스의 위치 설정
-                // x: 좌우, y: 위아래, z: 앞뒤
-                // z가 음수이면 사용자 앞쪽 방향
-                boxEntity.position = [0, 1.2, -1]
-                
+               //데이타와 위치 연결 - bk
+                boxEntity.position = boxes.first?.position ?? SIMD3<Float>(0, 1.2, -1.5)
+
                 // Immersive Space 안에 박스 Entity 추가
                 // 이 순간부터 공간 안에 realbox가 보이게 됨
+                //content.add(boxEntity)
+                
+                // attachments 기반의 MemoListView를 위한 Entity 생성
+                if let MemoListEntity = attachments.entity(for: "MemoListView") {
+                    MemoListEntity.position = SIMD3<Float>(0, 0.3, 0)
+                    
+                    // box에 Child로 MemoListEntity 추가
+                    boxEntity.addChild(MemoListEntity)
+                    
+                    //MemoListEntity.position = [0, 1, 0]
+                }
+                
+                // MeMoListEntity를 Child로 추가한 뒤 add
                 content.add(boxEntity)
                 
             } catch {
                 // realbox 이름이 틀렸거나,
                 // RealityKitContent에 해당 Entity가 없으면 여기로 들어옴
                 print("realbox 불러오기 실패:", error)
+            }
+        } update: { content, attachments in
+            
+        } attachments: {
+            // MemoListView를 불러와 MemoList UI Window 표시. id는 MemoListView로 설정해 attachments Entity 생성시 찾을 수 있도록 함.
+            Attachment(id: "MemoListView") {
+                MemoListView()
             }
         }
     }
