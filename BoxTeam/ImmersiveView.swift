@@ -17,6 +17,9 @@ struct ImmersiveView: View {
     // 박스를 실제 공간에 보여줄지 결정함
     @Environment(AppModel.self) private var appModel
     
+    @Environment(\.modelContext) private var modelContext
+
+    
     // 생성된 박스를 나중에 다시 접근하기 위해 저장하는 변수
     // 예: 드래그할 때 boxEntity의 위치를 바꾸기 위해 필요
     @State private var boxEntity: Entity?
@@ -33,7 +36,7 @@ struct ImmersiveView: View {
             
             // projectBox가 nil이면 아직 박스 데이터가 생성되지 않은 상태
             // 따라서 realbox를 불러오지 않고 종료
-            guard appModel.projectBox != nil else { return }
+            guard let box = boxes.first else { return }
             
             do {
                 // RealityKitContent 번들 안에 있는 "realbox" Entity를 불러옴
@@ -54,8 +57,8 @@ struct ImmersiveView: View {
                 boxEntity.components.set(InputTargetComponent())
                 
                //데이타와 위치 연결 - bk
-                boxEntity.position = boxes.first?.position ?? SIMD3<Float>(0, 1.2, -1.5)
-
+                boxEntity.position = box.position
+                
                 // Immersive Space 안에 박스 Entity 추가
                 // 이 순간부터 공간 안에 realbox가 보이게 됨
                 //content.add(boxEntity)
