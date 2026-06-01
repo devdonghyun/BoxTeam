@@ -31,6 +31,9 @@ final class AppModel {
     // App 파일의 WindowGroup(id:)와 같은 값이어야 함
     let mainWindowID = "MainWindow"
     
+    // MemoAddingView를 열고 닫을 때 사용할 ID
+    let memoaddingID = "MemoAddingView"
+    
     // ImmersiveSpace의 현재 상태를 표현하는 enum
     enum ImmersiveSpaceState {
         
@@ -43,6 +46,8 @@ final class AppModel {
         // ImmersiveSpace가 열린 상태
         case open
     }
+    
+    var isMemoAddingViewShown: Bool = false
     
     // 현재 ImmersiveSpace의 상태
     // 앱이 처음 시작될 때는 아직 열리지 않았으므로 closed

@@ -65,6 +65,16 @@ struct BoxTeamApp: App {
         
         //DataModel과 연결 - BK
         .modelContainer(for: [BoxState.self, MemoItem.self])
-
+        
+        // MemoAddingView Window 그룹
+        WindowGroup(id: appModel.memoaddingID){
+            MemoAddingView()
+                .environment(appModel)
+        }
+        .defaultSize(width: 479, height: 616)
+        // MemoAddingView Window의 생성 위치 설정
+        .defaultWindowPlacement{ content, context in
+            return WindowPlacement(.utilityPanel)
+        }
      }
 }

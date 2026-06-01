@@ -86,10 +86,12 @@ final class AppDataStore {
     }
 
     func createMemo(
+        name: String,
         text: String,
         color: Color
     ) throws -> MemoItem {
         let memo = MemoItem(
+            name: name,
             text: text,
             color: color
         )

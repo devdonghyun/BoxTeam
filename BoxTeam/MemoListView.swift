@@ -10,9 +10,6 @@ import SwiftData
 
 // Memo List Widow를 위한 SwiftUI 기반의 View
 struct MemoListView: View {
-    
-    
-    
     // Grid 구조
     let colums = [
         GridItem(.flexible(), spacing: 0),
@@ -21,8 +18,12 @@ struct MemoListView: View {
         GridItem(.flexible(), spacing: 0),
     ]
     
+    // appModel 접근을 위한 Envijronment
+    @Environment(AppModel.self) private var appModel
     // SwiftData 관리를 위한 modelContext
     @Environment(\.modelContext) private var modelContext
+    // 추가적인 Window를 띄우기 위해 필요한 Environment
+    @Environment(\.openWindow) var openWindow
     // 모든 메모 정보가 담겨있는 MemoItems를 Query
     @Query var MemoItems: [MemoItem]
     
@@ -30,6 +31,7 @@ struct MemoListView: View {
     //선택버튼으로 삭제 모드 전환
     @State private var isSelectionMode = false
     @State private var selectedMemoIDs: Set<UUID> = []
+    @State private var isMemoAddingStart: Bool = false
     
     // Adding 테스트용 메모
     @State var AddingTestMemo: MemoItem = MemoItem(
@@ -87,9 +89,14 @@ struct MemoListView: View {
                     
                     // 메모 추가 버튼(추가 버튼 클릭시 테스트 메모 하나 추가. 다시 한번 클릭시 추가된 메모가 삭제됨)
                     Button(action: {
+                        print(appModel.isMemoAddingViewShown)
+                        if !appModel.isMemoAddingViewShown {
+                            openWindow(id: appModel.memoaddingID)
+                            appModel.isMemoAddingViewShown = true
+                        }
                         if MemoItems.isEmpty{
                             modelContext.insert(AddingTestMemo)
-                            print("메모가 추가되었습니다. 메로 추가 버튼을 다시 한번 눌러 메모를 삭제할 수 있습니다.")
+                            print("메모가 추가되었습니다. 메모 추가 버튼을 다시 한번 눌러 메모를 삭제할 수 있습니다.")
                         }else{
                             modelContext.delete(AddingTestMemo)
                             print("메모가 삭제되었습니다.")
