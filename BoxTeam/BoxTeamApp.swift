@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 // 앱의 시작 지점
 // @main이 붙은 App 구조체가 앱 실행 시 가장 먼저 실행됨
@@ -36,6 +37,9 @@ struct BoxTeamApp: App {
         // ContentView에서 직접 만든 glassBackgroundEffect 등이 더 잘 보이게 함
         .windowStyle(.plain)
 
+        //DataModel과 연결 - BK
+        .modelContainer(for: [BoxState.self, MemoItem.self])
+
         // 3D 콘텐츠가 표시될 Immersive Space
         // openImmersiveSpace(id:)로 열 때 이 id와 일치해야 함
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
@@ -58,5 +62,9 @@ struct BoxTeamApp: App {
         // Immersive Space의 스타일 설정
         // .mixed는 현실 공간 passthrough 위에 3D 콘텐츠를 함께 보여주는 방식
         .immersionStyle(selection: .constant(.mixed), in: .mixed)
+        
+        //DataModel과 연결 - BK
+        .modelContainer(for: [BoxState.self, MemoItem.self])
+
      }
 }
