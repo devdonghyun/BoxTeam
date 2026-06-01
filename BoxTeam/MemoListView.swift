@@ -27,7 +27,7 @@ struct MemoListView: View {
     @Query var MemoItems: [MemoItem]
     
     
-    //선택버튼으로 삭제 모드 전환
+    //선택버튼으로 선택/삭제 모드 전환
     @State private var isSelectionMode = false
     @State private var selectedMemoIDs: Set<UUID> = []
     
@@ -100,7 +100,8 @@ struct MemoListView: View {
                     .buttonStyle(.borderedProminent)
                     .glassBackgroundEffect()
                 }
-            }.padding()
+            }
+            .padding()
             Spacer()
             if MemoItems.isEmpty {
                 // 빈 메모 리스트 표시
