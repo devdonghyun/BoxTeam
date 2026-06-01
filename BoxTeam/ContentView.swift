@@ -70,7 +70,6 @@ struct ContentView: View {
         
         do {
                 try dataStore.createBox()
-                appModel.createProjectBox()
             } catch {
                 print("박스 저장 실패:", error)
                 return
